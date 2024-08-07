@@ -7,10 +7,11 @@ const session = require('express-session');
 const passport = require('passport');
 const routes = require('./routes.js');
 const auth = require('./auth.js');
-const http = require('http').createServer(app);
-const io = require('socket.io')(http);
 
 const app = express();
+
+const http = require('http').createServer(app);
+const io = require('socket.io')(http);
 
 app.set('view engine', 'pug');
 app.set('views', './views/pug');
@@ -39,6 +40,7 @@ myDB(async client => {
   io.on('connection', socket => {
     console.log('A user has connected');
   });
+  
 }).catch(e => {
   app.route('/').get((req, res) => {
     res.render('index', { title: e, message: 'Unable to connect to database' });
